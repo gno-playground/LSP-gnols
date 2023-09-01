@@ -5,8 +5,11 @@ for Sublime Text.
 
 ## Requirements
 
-To use this package, you must have [LSP][3] and [Terminus][4] installed.
+To use this package, you must install the [Gno][6], [Terminus][4], and 
+[LSP][3] packages.
 
+> **Note** 
+>
 > It's recommended, but not required, to install the [LSP-json][2] package 
 > which will provide auto-completion and validation for this package's 
 > settings.
@@ -38,3 +41,4 @@ There are multiple ways to configure the package and the language server.
 [3]: https://packagecontrol.io/packages/LSP
 [4]: https://www.sublimetext.com/
 [5]: https://packagecontrol.io/packages/Terminus
+[6]: https://packagecontrol.io/packages/Gno
