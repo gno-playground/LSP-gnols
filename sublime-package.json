@@ -1,0 +1,62 @@
+{
+  "contributions": {
+    "settings": [
+      {
+        "file_patterns": [
+          "/LSP-gnols.sublime-settings"
+        ],
+        "schema": {
+          "$id": "sublime://settings/LSP-gnols",
+          "allOf": [
+            {
+              "$ref": "sublime://settings/LSP-plugin-base"
+            },
+            {
+              "$ref": "sublime://settings/LSP-gnols#/definitions/PluginConfig"
+            }
+          ],
+          "definitions": {
+            "PluginConfig": {
+              "properties": {
+                "initializationOptions": {
+                  "properties": {
+                    "gno": {
+                      "default": "",
+                      "description": "The path to the `gno` executable.",
+                      "type": "string"
+                    },
+                    "gnokey": {
+                      "default": "",
+                      "description": "The path to the `gnokey` executable.",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "file_patterns": [
+          "/*.sublime-project"
+        ],
+        "schema": {
+          "properties": {
+            "settings": {
+              "properties": {
+                "LSP": {
+                  "properties": {
+                    "gnols": {
+                      "$ref": "sublime://settings/LSP-gnols#/definitions/PluginConfig"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

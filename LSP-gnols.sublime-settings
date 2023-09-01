@@ -1,0 +1,16 @@
+{
+    "initializationOptions": {
+        // Path to the gno binary.
+        // 
+        // If empty, the server will try to find it in the $PATH.
+        "gno": "",
+        // Path to the gnokey binary.
+        // 
+        // If empty, the server will try to find it in the $PATH.
+        "gnokey": "",
+    },
+    "selector": "source.gno | source.gnomod",
+    "command": [
+        "${storage_path}/LSP-gnols/${gnols_bin}",
+    ],
+}

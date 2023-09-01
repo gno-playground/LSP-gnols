@@ -1,0 +1,18 @@
+[
+    {
+        "caption": "LSP-gnols: Clean Generated Files",
+        "command": "lsp_execute",
+        "args": {
+            "session_name": "gnols",
+            "command_name": "gno.cleanGeneratedFiles",
+        }
+    },
+    {
+        "caption": "Preferences: LSP-gnols Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/LSP-gnols/LSP-gnols.sublime-settings",
+            "default": "// Settings in here override those in \"LSP-gnols/LSP-gnols.sublime-settings\"\n{\n\t$0\n}\n"
+        }
+    }
+]
