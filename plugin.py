@@ -35,7 +35,7 @@ SESSION_NAME = "gnols"
 #
 # After changing this tag, go through the server settings again to see if any
 # new server settings are added or old ones removed.
-TAG = "v0.3.0"
+TAG = "v0.5.0"
 URL = "https://github.com/jdkato/gnols/releases/download/{tag}/gnols_{platform}_{arch}.zip"
 
 
@@ -73,6 +73,7 @@ def platform() -> str:
 def open_tests_in_terminus(
     session: Session,
     window: Optional[sublime.Window],
+    command_name: str,
     arguments: Tuple[str, List[str], None],
 ) -> None:
     if not window:
@@ -84,19 +85,32 @@ def open_tests_in_terminus(
     view = window.active_view()
     if not view:
         return
-
     pkg = os.path.dirname(parse_uri(arguments[1])[1])
-    cmd = [
-        arguments[0],  # bin
-        "test",
-        "-timeout",
-        "30s",
-        "-run",
-        arguments[2],  # test
-        pkg,  # directory
-    ]
 
-    print("Running tests: {}".format(arguments))
+    cmd = None
+    if command_name == "gnols.test":
+        cmd = [
+            arguments[0],  # bin
+            "test",
+            "-timeout",
+            "30s",
+            "-run",
+            "^{}$".format(arguments[2]),  # test(s)
+            pkg,  # directory
+        ]
+    else:
+        # TODO: no -bench flag(s)?
+        cmd = [
+            arguments[0],  # bin
+            "test",
+            "-timeout",
+            "30s",
+            "-run",
+            "^{}$".format(arguments[2]),  # bench(s)
+            pkg,  # directory
+        ]
+
+    print("Running tests: {}".format(cmd))
     terminus_args = {
         "title": "Gno Test",
         "cmd": cmd,
@@ -177,13 +191,16 @@ class GnoLS(AbstractPlugin):
             return False
 
         command_name = command["command"]
-        if command_name in ("gnols.test"):
+        if command_name in ("gnols.test", "gnols.bench"):
             session = self.weaksession()
             if not session:
                 return False
             try:
                 open_tests_in_terminus(
-                    session, sublime.active_window(), command["arguments"]
+                    session,
+                    sublime.active_window(),
+                    command_name,
+                    command["arguments"],
                 )
                 done_callback()
                 return True
