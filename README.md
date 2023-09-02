@@ -14,6 +14,16 @@ To use this package, you must install the [Gno][6], [Terminus][4], and
 > which will provide auto-completion and validation for this package's 
 > settings.
 
+You also need to have the [`gno`][7] binary installed. If the server can't find it on your `$PATH`, you'll need to manually specify its location in your settings:
+
+```json
+{
+    "initializationOptions": {
+        "gno": "/path/to/gno"
+    }
+}
+```
+
 ## Configuration
 
 There are multiple ways to configure the package and the language server.
@@ -42,3 +52,4 @@ There are multiple ways to configure the package and the language server.
 [4]: https://www.sublimetext.com/
 [5]: https://packagecontrol.io/packages/Terminus
 [6]: https://packagecontrol.io/packages/Gno
+[7]: https://github.com/gnolang/gno
