@@ -95,7 +95,7 @@ def open_tests_in_terminus(
             "-timeout",
             "30s",
             "-run",
-            "^{}$".format(arguments[2]),  # test(s)
+            "^{}\\$".format(arguments[2]),  # test(s)
             pkg,  # directory
         ]
     else:
@@ -106,7 +106,7 @@ def open_tests_in_terminus(
             "-timeout",
             "30s",
             "-run",
-            "^{}$".format(arguments[2]),  # bench(s)
+            "^{}\\$".format(arguments[2]),  # bench(s)
             pkg,  # directory
         ]
 
