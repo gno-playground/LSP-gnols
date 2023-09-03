@@ -1,5 +1,5 @@
 {
-    "initializationOptions": {
+    "settings": {
         // Path to the gno binary.
         // 
         // If empty, the server will try to find it in the $PATH.
@@ -8,6 +8,11 @@
         // 
         // If empty, the server will try to find it in the $PATH.
         "gnokey": "",
+        // preCompileOnSave: If true, the server will precompile the file before
+        // saving it.
+        "precompileOnSave": true,
+        // buildOnSave: If true, the server will build the file before saving it.
+        "buildOnSave": false,
     },
     "selector": "source.gno | source.gnomod",
     "command": [

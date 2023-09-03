@@ -19,6 +19,13 @@
             "PluginConfig": {
               "properties": {
                 "initializationOptions": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {}
+                },
+                "settings": {
+                  "additionalProperties": false,
+                  "type": "object",
                   "properties": {
                     "gno": {
                       "default": "",
@@ -29,7 +36,17 @@
                       "default": "",
                       "description": "The path to the `gnokey` executable.",
                       "type": "string"
-                    }
+                    },
+                    "precompileOnSave": {
+                      "default": true,
+                      "description": "Whether to pre-compile the file on save.",
+                      "type": "boolean"
+                    },
+                    "buildOnSave": {
+                      "default": false,
+                      "description": "Whether to build the file on save.",
+                      "type": "boolean"
+                    },
                   }
                 }
               }

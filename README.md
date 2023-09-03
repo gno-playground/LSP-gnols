@@ -18,7 +18,7 @@ You also need to have the [`gno`][7] binary installed. If the server can't find 
 
 ```json
 {
-    "initializationOptions": {
+    "settings": {
         "gno": "/path/to/gno"
     }
 }
@@ -37,7 +37,7 @@ There are multiple ways to configure the package and the language server.
         "settings": {
             "LSP": {
                 "LSP-gnols": {
-                    "initializationOptions": {
+                    "settings": {
                         // Put your settings here
                     }
                 }
