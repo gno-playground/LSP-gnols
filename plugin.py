@@ -35,7 +35,7 @@ SESSION_NAME = "gnols"
 #
 # After changing this tag, go through the server settings again to see if any
 # new server settings are added or old ones removed.
-TAG = "v0.6.1"
+TAG = "v0.7.0"
 URL = "https://github.com/jdkato/gnols/releases/download/{tag}/gnols_{platform}_{arch}.zip"
 
 
