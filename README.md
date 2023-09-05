@@ -1,7 +1,9 @@
 # LSP-gnols
 
 This is a helper package that automatically installs and updates [`gnols`][1] 
-for Sublime Text. 
+for Sublime Text.
+
+See [Setting up Sublime Text 4 for Gno development][8] for more information.
 
 ## Requirements
 
@@ -53,3 +55,4 @@ There are multiple ways to configure the package and the language server.
 [5]: https://packagecontrol.io/packages/Terminus
 [6]: https://packagecontrol.io/packages/Gno
 [7]: https://github.com/gnolang/gno
+[8]: https://dev.to/jdkato/setting-up-sublime-text-4-for-gno-development-2km3
