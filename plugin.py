@@ -96,7 +96,6 @@ def open_tests_in_terminus(
             "30s",
             "-run",
             "^{}\\$".format(arguments[2]),  # test(s)
-            pkg,  # directory
         ]
     else:
         # TODO: no -bench flag(s)?
@@ -107,8 +106,12 @@ def open_tests_in_terminus(
             "30s",
             "-run",
             "^{}\\$".format(arguments[2]),  # bench(s)
-            pkg,  # directory
         ]
+
+    root = get_setting(session, "root", os.environ.get("GNOROOT"))
+    if root:
+        cmd += ["-root-dir", root]
+    cmd += [pkg]
 
     print("Running tests: {}".format(cmd))
     terminus_args = {

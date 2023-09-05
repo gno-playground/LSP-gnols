@@ -37,6 +37,11 @@
                       "description": "The path to the `gnokey` executable.",
                       "type": "string"
                     },
+                    "root": {
+                      "default": "",
+                      "description": "Path to a local copy of the gno repository. `GNOROOT` will be used if empty.",
+                      "type": "string"
+                    },
                     "precompileOnSave": {
                       "default": true,
                       "description": "Whether to pre-compile the file on save.",
