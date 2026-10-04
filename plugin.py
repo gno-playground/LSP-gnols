@@ -1,7 +1,14 @@
+from __future__ import annotations
+
 import os
 import shutil
 import urllib.request
 import zipfile
+from typing import (
+    Any,
+    Callable,
+    cast,
+)
 
 import sublime
 
@@ -13,16 +20,7 @@ from LSP.plugin import (
     register_plugin,
     unregister_plugin,
 )
-from LSP.plugin.core.typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Mapping,
-    Optional,
-    Tuple,
-    Union,
-)
+from LSP.protocol import ExecuteCommandParams
 
 try:
     import Terminus  # type: ignore
@@ -42,7 +40,7 @@ URL = "https://github.com/jdkato/gnols/releases/download/{tag}/gnols_{platform}_
 def get_setting(
     session: Session,
     key: str,
-    default: Optional[Union[str, bool, List[str]]] = None,
+    default: str | bool | list[str] | None = None,
 ) -> Any:
     value = session.config.settings.get(key)
     if value is None:
@@ -72,9 +70,9 @@ def platform() -> str:
 
 def open_tests_in_terminus(
     session: Session,
-    window: Optional[sublime.Window],
+    window: sublime.Window | None,
     command_name: str,
-    arguments: Tuple[str, List[str], None],
+    arguments: tuple[str, str, str],
 ) -> None:
     if not window:
         return
@@ -95,7 +93,7 @@ def open_tests_in_terminus(
             "-timeout",
             "30s",
             "-run",
-            "^{}\\$".format(arguments[2]),  # test(s)
+            f"^{arguments[2]}\\$",  # test(s)
         ]
     else:
         # TODO: no -bench flag(s)?
@@ -105,7 +103,7 @@ def open_tests_in_terminus(
             "-timeout",
             "30s",
             "-run",
-            "^{}\\$".format(arguments[2]),  # bench(s)
+            f"^{arguments[2]}\\$",  # bench(s)
         ]
 
     root = get_setting(session, "root", os.environ.get("GNOROOT"))
@@ -113,7 +111,7 @@ def open_tests_in_terminus(
         cmd += ["-root-dir", root]
     cmd += [pkg]
 
-    print("Running tests: {}".format(cmd))
+    print(f"Running tests: {cmd}")
     terminus_args = {
         "title": "Gno Test",
         "cmd": cmd,
@@ -132,14 +130,14 @@ class GnoLS(AbstractPlugin):
 
     @classmethod
     def basedir(cls) -> str:
-        return os.path.join(cls.storage_path(), __package__)
+        return os.path.join(cls.storage_path(), str(__package__))
 
     @classmethod
     def server_version(cls) -> str:
         return TAG
 
     @classmethod
-    def additional_variables(cls) -> Optional[Dict[str, str]]:
+    def additional_variables(cls) -> dict[str, str] | None:
         return {
             "gnols_bin": "gnols.exe"
             if sublime.platform() == "windows"
@@ -188,13 +186,13 @@ class GnoLS(AbstractPlugin):
             raise
 
     def on_pre_server_command(
-        self, command: Mapping[str, Any], done_callback: Callable[[], None]
+        self, command: ExecuteCommandParams, done_callback: Callable[[], None]
     ) -> bool:
         if not Terminus:
             return False
 
         command_name = command["command"]
-        if command_name in ("gnols.test", "gnols.bench"):
+        if command_name in ("gnols.test", "gnols.bench") and 'arguments' in command:
             session = self.weaksession()
             if not session:
                 return False
@@ -203,15 +201,13 @@ class GnoLS(AbstractPlugin):
                     session,
                     sublime.active_window(),
                     command_name,
-                    command["arguments"],
+                    cast('tuple[str, str, str]', command["arguments"]),
                 )
                 done_callback()
                 return True
             except Exception as ex:
                 print(
-                    "Exception handling command {}: {}".format(
-                        command_name, ex
-                    )
+                    f"Exception handling command {command_name}: {ex}"
                 )
         return False
 
